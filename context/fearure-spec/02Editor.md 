@@ -1,0 +1,31 @@
+we need the base chrome componets that frame every editor screen - the top 
+navbar and the left sidebar .this will be reused and extendedin every 
+chapter that follows 
+
+### Editor navbar
+
+create "Components/editor/editor-navbar.tsx".
+
+requirments:
+
+- fixed-height top navbar
+- left, center, and right sections
+- left section conains sidebar toggle button 
+- use 'panelLeftopen' ./. 'panelLeftlose' icons based on sidebar state 
+- right sectioin stays empty for now 
+- dark background with subtle bottom border 
+
+### Projects sidebar
+
+requirments:
+
+- sidebar should float above the editor canvas 
+- opening it should not push page content
+- slides in from the left 
+- accepts 'isOpen'prop  
+- header with 'projects' title +close button 
+- shadcn 'tabs' :
+- my projects 
+- shared
+- both tabs show empty placeholder state
+- full-width 'new project' button at the bottom with 'plus' icon 
