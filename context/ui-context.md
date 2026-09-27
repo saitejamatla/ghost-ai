@@ -99,6 +99,7 @@ shadcn/ui on top of Tailwind. No custom design system. Components live in `compo
 - Sidebars: floating overlay with dark semi-transparent background and subtle border.
 - Modals and dialogs: centered overlay, `rounded-3xl`, dark background with backdrop blur.
 - Navbar: top bar with dark background and bottom border.
+- Auth pages (`app/(auth)`): 50/50 split on large screens — left `bg-surface` brand panel (logo, headline, feature list with `bg-accent-dim` icon tiles), right `bg-base` with the centered Clerk form. Form only on small screens.
 
 ## Icons
 
