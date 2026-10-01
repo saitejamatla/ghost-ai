@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import {
   FolderOpen,
   Pencil,
@@ -18,7 +20,8 @@ import type { Project } from "@/types/project";
 interface ProjectsSidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  projects: Project[];
+  ownedProjects: Project[];
+  sharedProjects: Project[];
   onCreate: () => void;
   onRename: (project: Project) => void;
   onDelete: (project: Project) => void;
@@ -27,14 +30,12 @@ interface ProjectsSidebarProps {
 export function ProjectsSidebar({
   isOpen,
   onClose,
-  projects,
+  ownedProjects,
+  sharedProjects,
   onCreate,
   onRename,
   onDelete,
 }: ProjectsSidebarProps) {
-  const ownedProjects = projects.filter((project) => project.isOwner);
-  const sharedProjects = projects.filter((project) => !project.isOwner);
-
   return (
     <>
       <div
@@ -144,11 +145,26 @@ interface ProjectItemProps {
 }
 
 function ProjectItem({ project, onRename, onDelete }: ProjectItemProps) {
+  const { projectId } = useParams<{ projectId?: string }>();
+  const isActive = project.id === projectId;
+
   return (
-    <li className="group flex items-center gap-1 rounded-xl px-3 py-2 hover:bg-subtle">
-      <span className="flex-1 truncate text-sm text-copy-secondary group-hover:text-copy-primary">
+    <li
+      className={cn(
+        "group flex items-center gap-1 rounded-xl px-3 py-2 hover:bg-subtle",
+        isActive && "bg-subtle"
+      )}
+    >
+      <Link
+        href={`/editor/${project.id}`}
+        aria-current={isActive ? "page" : undefined}
+        className={cn(
+          "flex-1 truncate text-sm text-copy-secondary outline-none group-hover:text-copy-primary focus-visible:text-copy-primary",
+          isActive && "text-copy-primary"
+        )}
+      >
         {project.name}
-      </span>
+      </Link>
 
       {project.isOwner && (
         <div className="flex shrink-0 items-center md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100">

@@ -37,7 +37,10 @@
 - Projects can include additional collaborators.
 - Only authenticated users can access protected routes.
 - Only the owner or a collaborator can mutate project resources.
+- Only the owner can rename or delete a project; collaborators cannot (non-owner attempts return `403`).
 - Liveblocks room tokens are issued only after verifying project membership.
+- A project's ID is also its Liveblocks room ID (`<slug>-<suffix>`, see `lib/project-id.ts`); the two never diverge.
+- Shared projects are resolved by matching `ProjectCollaborator.email` (case-insensitive) against the signed-in user's Clerk email addresses.
 
 ## Starter System Designs
 

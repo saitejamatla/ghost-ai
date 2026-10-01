@@ -15,25 +15,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type {
-  ProjectDialogsState,
+  ProjectActions,
   ProjectDialogType,
-} from "@/hooks/use-project-dialogs";
-import { slugify } from "@/lib/slug";
+} from "@/hooks/use-project-actions";
 
 interface ProjectDialogsProps {
-  dialogs: ProjectDialogsState;
+  actions: ProjectActions;
 }
 
-export function ProjectDialogs({ dialogs }: ProjectDialogsProps) {
+export function ProjectDialogs({ actions }: ProjectDialogsProps) {
   const renameInputRef = useRef<HTMLInputElement>(null);
-  const { targetProject, name, setName } = dialogs;
-  const slug = slugify(name);
+  const { renameTarget, deleteTarget, name, setName, roomId } = actions;
 
   return (
     <>
       <ProjectDialog
         type="create"
-        dialogs={dialogs}
+        actions={actions}
         title="Create project"
         description="Name your new architecture workspace."
         submitLabel="Create project"
@@ -45,24 +43,22 @@ export function ProjectDialogs({ dialogs }: ProjectDialogsProps) {
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-          <p className="text-xs text-copy-muted">
-            Slug:{" "}
-            <span className="font-mono text-copy-secondary">
-              {slug || "your-project-name"}
-            </span>
+          <p className="text-xs break-all text-copy-muted">
+            Room ID:{" "}
+            <span className="font-mono text-copy-secondary">{roomId}</span>
           </p>
         </div>
       </ProjectDialog>
 
       <ProjectDialog
         type="rename"
-        dialogs={dialogs}
+        actions={actions}
         title="Rename project"
         description={
           <>
             Enter a new name for{" "}
             <span className="font-medium text-copy-primary">
-              {targetProject?.name}
+              {renameTarget?.name}
             </span>
             .
           </>
@@ -80,12 +76,12 @@ export function ProjectDialogs({ dialogs }: ProjectDialogsProps) {
 
       <ProjectDialog
         type="delete"
-        dialogs={dialogs}
+        actions={actions}
         title="Delete project"
         description={
           <>
             <span className="font-medium text-copy-primary">
-              {targetProject?.name}
+              {deleteTarget?.name}
             </span>{" "}
             will be permanently deleted. This action cannot be undone.
           </>
@@ -99,7 +95,7 @@ export function ProjectDialogs({ dialogs }: ProjectDialogsProps) {
 
 interface ProjectDialogProps {
   type: ProjectDialogType;
-  dialogs: ProjectDialogsState;
+  actions: ProjectActions;
   title: string;
   description: ReactNode;
   submitLabel: string;
@@ -110,7 +106,7 @@ interface ProjectDialogProps {
 
 function ProjectDialog({
   type,
-  dialogs,
+  actions,
   title,
   description,
   submitLabel,
@@ -118,7 +114,8 @@ function ProjectDialog({
   initialFocus,
   children,
 }: ProjectDialogProps) {
-  const { activeDialog, isSubmitting, canSubmit, close, submit } = dialogs;
+  const { activeDialog, isSubmitting, error, canSubmit, close, submit } =
+    actions;
 
   return (
     <Dialog
@@ -138,6 +135,12 @@ function ProjectDialog({
           </DialogHeader>
 
           {children}
+
+          {error && (
+            <p role="alert" className="text-sm text-error">
+              {error}
+            </p>
+          )}
 
           <DialogFooter>
             <DialogClose
