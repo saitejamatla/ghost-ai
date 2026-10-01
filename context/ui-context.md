@@ -26,7 +26,7 @@ All colors are defined as CSS custom properties in `globals.css` and mapped to T
 | Success          | `--state-success`      | `#34d399`                 |
 | Warning          | `--state-warning`      | `#fbbf24`                 |
 
-Tailwind utility names map to these variables. Use `bg-base`, `bg-surface`, `text-copy-primary`, `text-copy-muted`, `border-surface-border`, `text-brand`, `bg-accent-dim`, etc.
+Tailwind utility names map to these variables. `bg-base` is registered in the bg-only `--background-color-*` namespace so it doesn't collide with the `text-base` font-size utility. Use `bg-base`, `bg-surface`, `text-copy-primary`, `text-copy-muted`, `border-surface-border`, `text-brand`, `bg-accent-dim`, etc.
 
 ## Typography
 

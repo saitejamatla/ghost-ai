@@ -18,7 +18,9 @@
 - `trigger` — Long-running background jobs: AI design generation and spec generation.
 - `lib` — Shared infrastructure: Prisma client, access control helpers, and utilities.
 - `components` — UI composition: canvas surfaces, sidebars, dialogs, and interactive elements.
-- `prisma` — Database schema and generated client output.
+- `hooks` — client-side React hooks for UI state (e.g. project dialog state).
+- `types` — shared TypeScript domain types.
+- `prisma` — Multi-file database schema (`schema.prisma` + `models/*.prisma`) and migrations. The generated client is emitted to `app/generated/prisma` (gitignored) and is only imported through `lib/prisma.ts`.
 - `data` — Legacy local directory. Not used for new artifacts.
 
 ## Storage Model

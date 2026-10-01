@@ -46,5 +46,7 @@
 - `lib/` — shared infrastructure: Prisma client, auth helpers, utilities.
 - `trigger/` — all durable background tasks and AI workflows.
 - `components/` — UI composition only; no business logic.
+- `hooks/` — client-side React hooks for UI state.
+- `types/` — shared domain types.
 - `app/api/` — route handlers for auth, triggering, and persistence.
 - Name files after the responsibility they contain, not the technology.
